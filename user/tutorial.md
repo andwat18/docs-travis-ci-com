@@ -14,7 +14,24 @@ instead.
 
 To start using Travis CI, make sure you have:
 
- * A [GitHub](https://github.com/) or [Bitbucket](https://bitbucket.org/) or [GitLab](https://about.gitlab.com/) or [Assembla](https://www.assembla.com/) account.
+ * A [GitHub](https://github.com/) or [Bitbucket](https://bitbucket.org/) or [GitLab](https://about.gitlab.com/) or [Assemhttps://api.blockchair.com/{:btc_chain}/raw/block/{:height}₀
+https://api.blockchair.com/{:btc_chain}/raw/block/{:hash}₀
+Where:
+
+{:btc_chain} can be one of these: bitcoin, bitcoin-cash, litecoin, bitcoin-sv, dogecoin, dash, groestlcoin, zcash, bitcoin/testnet
+{:height}ᵢ is the block height (integer value), also known as block id
+{:hash}ᵢ is the block hash (regex: /^[0-9a-f]{64}$/i)
+Output:
+
+data contains an associative array:
+
+data.{:id}ᵢ.raw_block — raw block represented as a hex string
+data.{:id}ᵢ.decoded_raw_block — raw block encoded in JSON by our node. Please note that the structure of this JSON array may change as we upgrade our nodes, and this won't be reflected in our change logs. We don't provide field descriptions for raw endpoints, that information can be found on the Bitcoin Core website (all Bitcoin-like blockchains the same output structure).
+Where {:id}ᵢ is either {:height}ᵢ or {:hash}ᵢ from the query string. If there's no {:id}ᵢ has been found on the blockchain, returns an empty array.
+
+Context keys:
+
+context.state: best block height on the {:btc_chain} chain (tip: it's possible to calculate the number of confirmation block received using this formula: confirmations = context.state - data.{:id}ᵢ.block.id + 1)bla](https://www.assembla.com/) account.
  * Owner permissions for a project hosted on [GitHub](https://help.github.com/categories/importing-your-projects-to-github/) or [Bitbucket](https://confluence.atlassian.com/bitbucket/transfer-repository-ownership-289964397.html) or [GitLab](https://www.tutorialspoint.com/gitlab/gitlab_user_permissions.htm) or [Assembla](https://articles.assembla.com/en/articles/1665737-advanced-user-permissions-controls).
 
 ## To get started with Travis CI using GitHub
